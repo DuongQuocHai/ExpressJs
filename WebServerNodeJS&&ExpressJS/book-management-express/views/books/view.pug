@@ -1,0 +1,10 @@
+h1 View Book
+form(action="/books/" + book.id + "/update", method="POST")
+    input(placeholder="title" type="text", name="title")
+    input(placeholder="description" type="text", name="description")
+    button Update Book
+p
+    div Title:  
+        span= book.title  
+    div Description: 
+        span= book.description

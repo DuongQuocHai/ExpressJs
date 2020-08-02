@@ -1,0 +1,16 @@
+h1 Book List
+form(action="/books/add", method="POST")
+    input(placeholder="title" type="text", name="title")
+    input(placeholder="description" type="text", name="description")
+    button Add Book
+form(action="/books/search", method="GET")
+    input(placeholder="title" type="text", name="title")
+    button Search
+ul
+  each val in listBooks
+    li
+      span= val.title
+      span &nbsp;
+      a(href='/books/' + val.id) View
+      span &nbsp;
+      a(href='/books/' + val.id + '/delete') delete
