@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+var bodyParser = require('body-parser')
 
 // const low = require('lowdb')
 // const FileSync = require('lowdb/adapters/FileSync')
@@ -10,6 +11,9 @@ const app = express();
 const port = 3000
 app.set('view engine', 'pug');
 app.set('views', './views');
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: true}));
 
 const todos = [
     { id: 1, todo: 'Đi chợ' },
@@ -36,12 +40,22 @@ app.get('/todos/search', (req, res) => {
     var matchedTodos = todos.filter((todo) => {
         return todo.todo.toLocaleLowerCase().indexOf(q.toLocaleLowerCase()) !== -1;
     })
-
-    res.render('todos/index', { 
+    res.render('todos/index', {
         todos: matchedTodos
     })
     console.log(req.query);
 })
+
+app.get('/todos/create', function (req, res) {
+    res.render('todos/create');
+})
+app.post('/todos/create', function (req, res) {
+    todos.push(req.body)
+    res.redirect('/todos');
+})
+
+
+
 
 app.listen(port, function () {
     console.log('server listening on port', port);
